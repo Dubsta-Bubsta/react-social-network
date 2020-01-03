@@ -1,0 +1,24 @@
+.nav {
+  grid-area: n;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  padding-left: 10px;
+  line-height: 32px;
+}
+
+.item:hover {
+  background: #e1e5eb;
+  cursor: pointer;
+}
+
+.item a {
+  color: #285473;
+}
+
+
+.item .active {
+  color: #0f2230;
+}

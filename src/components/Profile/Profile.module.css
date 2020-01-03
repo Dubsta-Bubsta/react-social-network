@@ -1,0 +1,13 @@
+.content {
+  grid-area: c;
+  
+  background: #fff;
+  display: grid;
+  justify-content: start;
+  padding: 20px 50px;
+  border-radius: 5px;
+}
+
+.content img {
+  width: 300px;
+}

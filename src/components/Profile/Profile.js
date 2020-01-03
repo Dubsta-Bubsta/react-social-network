@@ -1,25 +1,20 @@
 import React from 'react';
+import s from './Profile.module.css';
 
+import MyPosts from './MyPosts/MyPosts';
 
 
 
 const Profile = () => {
     return (
-        <main className="content">
+        <main className = {s.content}>
             <div>
-                <img src="https://s1.1zoom.me/big3/147/Waterfalls_Summer_Rivers_Rays_of_light_563524_2800x1874.jpg" />
+                <img src="https://s1.1zoom.me/big3/147/Waterfalls_Summer_Rivers_Rays_of_light_563524_2800x1874.jpg" alt ="img" />
             </div>
             <div>
                 ava + desc
 			</div>
-            <div>               
-				<div>
-                    div1
-				</div>
-                <div>
-                    div2
-				</div>
-            </div>
+            <MyPosts />
         </main>
     );
 }

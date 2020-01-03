@@ -3,8 +3,9 @@ body{
 }
 .app-wrapper {
   display: grid;
-  width: 1200px;
-  margin: 0 auto;
+  max-width: 1200px;
+  min-width: 400px;
+  margin: 0 15%;
 
   grid-template-areas: 
   "h h"
@@ -12,36 +13,4 @@ body{
   grid-template-columns: 2fr 10fr;
   grid-template-rows: 40px 1fr;
   grid-gap: 10px;
-}
-
-.header{
-  grid-area: h;
-  background: #4a76a8;
-
-  display: grid;
-  align-items: center;  
-}
-
-.header img {
-  margin-left: 15px;
-  height: 30px;
-}
-
-.nav {
-  grid-area: n;  
-  /* display: grid;
-  align-items: center;
-  justify-content: end; */
-}
-
-.content {
-  grid-area: c;
-  
-  background: #fff;
-  display: grid;
-  justify-content: center;
-}
-
-.content img {
-  width: 300px;
 }
