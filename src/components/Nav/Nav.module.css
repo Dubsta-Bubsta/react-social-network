@@ -14,11 +14,11 @@
   cursor: pointer;
 }
 
-.item a {
+.item  {
+  
   color: #285473;
 }
 
-
-.item .active {
-  color: #0f2230;
+.activeLink {
+  color: #6694b4;
 }

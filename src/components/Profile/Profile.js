@@ -7,7 +7,7 @@ import MyPosts from './MyPosts/MyPosts';
 
 const Profile = () => {
     return (
-        <main className = {s.content}>
+        <div>
             <div>
                 <img src="https://oboi.ws/filters/earlybird_24_8740_oboi_gregori_haus_1400x1050.jpg" alt ="img" />               
 
@@ -15,8 +15,9 @@ const Profile = () => {
             <div>
                 ava + description
 			</div>
+            ----
             <MyPosts />
-        </main>
+        </div>
     );
 }
 
