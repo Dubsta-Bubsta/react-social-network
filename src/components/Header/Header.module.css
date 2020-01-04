@@ -1,12 +1,15 @@
 .header{
   grid-area: h;
   background: #4a76a8;
-
+  height: 40px;
   display: grid;
   align-items: center;  
+  margin-bottom: 10px;
+  position: fixed;
+  width: 100vw;
 }
 
 .header img {
-  margin-left: 15px;
+  margin-left: 45px;
   height: 30px;
 }

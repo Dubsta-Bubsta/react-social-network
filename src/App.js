@@ -8,9 +8,12 @@ import Profile from './components/Profile/Profile';
 const App = () => {
 	return (
 		<div className="app-wrapper">
-			<Header />			
-			<Nav /> 			
-			<Profile />			
+			<Header />
+
+			<div className='app-wrapper-content'>
+				<Nav />
+				<Profile />
+			</div>
 		</div>
 	);
 }

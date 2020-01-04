@@ -1,16 +1,14 @@
 body{
   background: #edeef0;
 }
-.app-wrapper {
+.app-wrapper-content {
   display: grid;
   max-width: 1200px;
   min-width: 400px;
   margin: 0 15%;
+  padding-top: 50px;
 
-  grid-template-areas: 
-  "h h"
-  "n c";
-  grid-template-columns: 2fr 10fr;
-  grid-template-rows: 40px 1fr;
+  grid-template-areas: "nav content";
+  grid-template-columns: 2fr 10fr;  
   grid-gap: 10px;
 }
