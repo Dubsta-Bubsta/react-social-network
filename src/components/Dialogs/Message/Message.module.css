@@ -1,0 +1,7 @@
+.messages {
+    padding-left: 20px;
+}
+
+.message:not(:last-child) {
+    padding-bottom: 20px;
+}

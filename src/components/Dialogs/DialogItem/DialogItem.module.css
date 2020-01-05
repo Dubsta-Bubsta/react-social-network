@@ -1,0 +1,7 @@
+.dialogActive{    
+    color: #979fa5;
+}
+
+.dialog:not(:last-child){    
+    padding-bottom: 20px;
+}
