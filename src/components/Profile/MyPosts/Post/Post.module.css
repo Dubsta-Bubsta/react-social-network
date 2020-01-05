@@ -1,4 +1,7 @@
-.item {}
+.item {
+  padding: 10px;
+  border-bottom: 1px solid #edeef0;
+}
 
 .item img {
   width: 50px;

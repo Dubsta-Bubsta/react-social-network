@@ -11,14 +11,12 @@ const MyPosts = () => {
             My posts
             <div>
                 <textarea></textarea>
+                <br />
                 <button>Add post</button>
             </div>
             <div className={s.posts}>
-
-                <Post message='Hi, how are you?' likesCount = '23'/>
-                <Post message="it's my post?" likesCount = '15'/>
-
-
+                <Post message='Hi, how are you?' likesCount='23' />
+                <Post message="it's my post?" likesCount='15' />
             </div>
         </div>
     );

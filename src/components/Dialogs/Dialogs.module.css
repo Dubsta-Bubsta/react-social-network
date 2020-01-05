@@ -1,0 +1,26 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    grid-gap: 10px;
+}
+
+.dialogsItems {
+    border-right: 2px solid #edeef0;
+   
+    padding-right: 20px;
+}
+.dialogActive{    
+    color: #979fa5;
+}
+
+.dialog:not(:last-child){    
+    padding-bottom: 20px;
+}
+.messages {
+    padding-left: 20px;
+}
+
+
+.message:not(:last-child) {
+    padding-bottom: 20px;
+}

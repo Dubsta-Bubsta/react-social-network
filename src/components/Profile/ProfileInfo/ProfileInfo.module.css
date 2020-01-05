@@ -1,0 +1,10 @@
+.profileInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-bottom: 20px;
+  grid-gap: 20px;
+}
+
+img {
+  width: 300px;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './Profile.module.css';
 
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPosts from './MyPosts/MyPosts';
 
 
@@ -8,14 +9,7 @@ import MyPosts from './MyPosts/MyPosts';
 const Profile = () => {
     return (
         <div>
-            <div>
-                <img src="https://oboi.ws/filters/earlybird_24_8740_oboi_gregori_haus_1400x1050.jpg" alt ="img" />               
-
-            </div>
-            <div>
-                ava + description
-			</div>
-            ----
+            <ProfileInfo />
             <MyPosts />
         </div>
     );
