@@ -17,12 +17,15 @@ const Dialogs = (props) => {
 
 
     return (
-        <div className={s.dialogs}>
-            <div className={s.dialogsItems}>
-                {dialogsElements}
-            </div>
-            <div className={s.messages}>
-                {messagesElements}
+        <div>
+            <div className={s.dialogs}>
+                <div className={s.dialogsItems}>
+                    {dialogsElements}
+                </div>
+                <div className={s.messages}>
+                    {messagesElements}
+                </div>
+
             </div>
             <div className={s.sendMessage}>
                 <textarea ref={newMessageRef}></textarea>

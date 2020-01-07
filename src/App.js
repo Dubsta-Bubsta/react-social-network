@@ -11,7 +11,7 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 
 const App = (props) => {
-	// console.log(props)
+	console.log(props)
 	return (
 			<div className="app-wrapper">
 				<Header />
@@ -19,7 +19,7 @@ const App = (props) => {
 					<Nav state={props.state.siteBar}/>
 
 					<div className="app-wrapper-content">
-						<Route path="/profile" render={() => <Profile state={props.state.profilePage} />} />
+					<Route path="/profile" render={() => <Profile state={props.state.profilePage} addPost={props.addPost}/>} />
 						<Route path="/dialogs" render={() => <Dialogs state={props.state.dialogsPage} />} />
 						<Route path="/news" component={News} />
 						<Route path="/music" component={Music} />

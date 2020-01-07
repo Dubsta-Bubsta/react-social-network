@@ -1,28 +1,24 @@
-body{
+body {
   background: #edeef0;
 }
+
 .app-container {
   display: grid;
   max-width: 1200px;
   min-width: 400px;
   margin: 0 15%;
   padding-top: 50px;
-
   grid-template-areas: "nav content";
-  grid-template-columns: 2fr 10fr;  
+  grid-template-columns: 2fr 10fr;
   grid-gap: 10px;
 }
 
 .app-wrapper-content {
- 
-    grid-area: content;
-    
-    background: #fff;
-    display: grid;
-    justify-content: start;
-    padding: 20px 30px;
-    border-radius: 5px;
+  grid-area: content;
+  background: #fff;
+  display: grid;
+  justify-content: start;
+  padding: 20px 30px;
+  border-radius: 5px;
   border: 1px solid #e3e4e8;
-  
-  
 }
