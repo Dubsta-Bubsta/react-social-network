@@ -13,20 +13,26 @@ import Settings from './components/Settings/Settings';
 const App = (props) => {
 	console.log(props)
 	return (
-			<div className="app-wrapper">
-				<Header />
-				<div className='app-container'>
-					<Nav state={props.state.siteBar}/>
+		<div className="app-wrapper">
+			<Header />
+			<div className='app-container'>
+				<Nav state={props.state.siteBar} />
 
-					<div className="app-wrapper-content">
-					<Route path="/profile" render={() => <Profile state={props.state.profilePage} addPost={props.addPost}/>} />
-						<Route path="/dialogs" render={() => <Dialogs state={props.state.dialogsPage} />} />
-						<Route path="/news" component={News} />
-						<Route path="/music" component={Music} />
-						<Route path="/settings" component={Settings} />
-					</div>
+				<div className="app-wrapper-content">
+					<Route path="/profile" render={() => <Profile
+						profilePage={props.state.profilePage}
+						addPost={props.addPost}
+						updateNewPostText={props.updateNewPostText} />} />
+					<Route path="/dialogs" render={() => <Dialogs
+						dialogsPage={props.state.dialogsPage}
+						sendMessage={props.sendMessage}
+						updateNewMessageText={props.updateNewMessageText} />} />
+					<Route path="/news" component={News} />
+					<Route path="/music" component={Music} />
+					<Route path="/settings" component={Settings} />
 				</div>
 			</div>
+		</div>
 	);
 }
 

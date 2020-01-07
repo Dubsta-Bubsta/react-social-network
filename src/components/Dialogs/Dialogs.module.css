@@ -1,12 +1,12 @@
 .dialogs {
     display: grid;
     width: 100%;
-    grid-template-columns: minmax(100px, 1fr) 10fr; 
+    grid-template-columns: minmax(100px, 1fr) 10fr;
     grid-gap: 10px;
 }
 
 .dialogsItems {
-    border-right: 2px solid #edeef0;   
+    border-right: 2px solid #edeef0;
     padding-right: 20px;
 }
 
@@ -14,12 +14,13 @@
     margin-top: 30px;
     display: grid;
     width: 100%;
-    grid-template-columns:  1fr auto;
+    grid-template-columns: 1fr auto;
     grid-template-rows: 1fr;
     grid-gap: 20px;
     justify-items: center;
     align-items: center;
 }
+
 .sendMessage textarea {
     font-family: 'Roboto', sans-serif;
     height: 40px;
@@ -36,4 +37,3 @@
     border-radius: 5px;
     padding: 0 15px;
 }
-
