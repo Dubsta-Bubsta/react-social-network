@@ -3,22 +3,20 @@ import s from './Dialogs.module.css';
 
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import state from '../../redux/state';
-
+import { sendMessageActionCreator, updateNewMessageTextActionCreator } from '../../redux/dialogs-reducer'
 
 const Dialogs = (props) => {
-    let dialogsElements = props.dialogsPage.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id} key={dialog.id} />);
-    let messagesElements = props.dialogsPage.messages.map(messageItem => <Message message={messageItem.message} id={messageItem.id} key={messageItem.id} />);
-    window.state = state;
+    let state = props.store.getState().dialogsPage;
+    let dialogsElements = state.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id} key={dialog.id} />);
+    let messagesElements = state.messages.map(messageItem => <Message message={messageItem.message} id={messageItem.id} key={messageItem.id} />);
 
-    let newMessageRef = React.createRef();
     let sendMessage = () => {
-        props.sendMessage();
+        props.dispatch(sendMessageActionCreator())
     }
 
-    let onMessageTextChange = () => {
-        let text = newMessageRef.current.value;
-        props.updateNewMessageText(text);
+    let onMessageTextChange = (e) => {
+        let text = e.target.value;
+        props.dispatch(updateNewMessageTextActionCreator(text))
     }
     return (
         <div>
@@ -26,18 +24,17 @@ const Dialogs = (props) => {
                 <div className={s.dialogsItems}>
                     {dialogsElements}
                 </div>
-                <div>
-                    <div className={s.messages}>
-                        {messagesElements}
-                    </div>
 
+                <div className={s.messages}>
+                    {messagesElements}
                 </div>
             </div>
+
             <div className={s.sendMessage}>
-                <textarea ref={newMessageRef} onChange={onMessageTextChange} value={props.dialogsPage.newMessageText}/>
+                <textarea onChange={onMessageTextChange} value={state.newMessageText} />
                 <button onClick={sendMessage}>Отправить</button>
             </div>
-        </div>
+        </div >
 
     );
 }

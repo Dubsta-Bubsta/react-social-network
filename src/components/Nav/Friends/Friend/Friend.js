@@ -2,10 +2,10 @@ import React from 'react';
 import s from './Friend.module.css';
 
 
-const Friends = (props) => {   
+const Friends = (props) => {
     return (
         <div className={s.friend}>
-            <img src={props.img}/>
+            <img src={props.img} alt="friendAvatar" />
             <p>{props.name}</p>
         </div>
     );

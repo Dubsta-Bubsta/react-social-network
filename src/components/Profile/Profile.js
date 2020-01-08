@@ -8,13 +8,12 @@ import MyPosts from './MyPosts/MyPosts';
 
 const Profile = (props) => {
     return (
-        <div>
+        <div className={s.profile}>
             <ProfileInfo />
             <MyPosts
                 posts={props.profilePage.posts}
                 newPostText={props.profilePage.newPostText}
-                addPost={props.addPost}
-                updateNewPostText={props.updateNewPostText} />           
+                dispatch={props.dispatch} />           
         </div>
     );
 }
