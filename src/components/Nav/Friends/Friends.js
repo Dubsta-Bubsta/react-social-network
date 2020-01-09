@@ -5,14 +5,15 @@ import { NavLink } from 'react-router-dom';
 
 
 const Friends = (props) => {
-    // let friends = props.friends.map(friend => <Friend id={friend.id} name={friend.name} img = {friend.img}  key={friend.id} />);
+    debugger;
+    let friends = props.friends.map(friend => <Friend id={friend.id} name={friend.name} img = {friend.img}  key={friend.id} />);
    
     return (
         <div className = {s.friendsBlock}>
             <h1>Friends</h1>
             
             <NavLink to="/friends" className = {s.friends}>
-                {/* { friends } */}
+                { friends }
             </NavLink>
         </div>
     );

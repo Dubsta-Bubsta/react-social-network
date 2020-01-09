@@ -3,12 +3,14 @@ import { Route } from "react-router-dom";
 import './App.css';
 
 import Header from './components/Header/Header';
-import Nav from './components/Nav/Nav';
+import NavContainer from './components/Nav/NavContainer'
 import Profile from './components/Profile/Profile';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
+
+
 
 const App = (props) => {
 	console.log(props)
@@ -16,8 +18,7 @@ const App = (props) => {
 		<div className="app-wrapper">
 			<Header />
 			<div className='app-container'>
-				<Nav  />
-{/* state={props.state.siteBar} */}
+				<NavContainer />
 				<div className="app-wrapper-content">
 					<Route path="/profile" render={() => <Profile />} />
 					<Route path="/dialogs" render={() => <DialogsContainer />} />
