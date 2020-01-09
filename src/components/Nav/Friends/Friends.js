@@ -1,17 +1,19 @@
 import React from 'react';
 import s from './Friends.module.css';
 import Friend from './Friend/Friend';
+import { NavLink } from 'react-router-dom';
 
 
 const Friends = (props) => {
-    let friends = props.friends.map(friend => <Friend id={friend.id} name={friend.name} img = {friend.img}  key={friend.id} />);
+    // let friends = props.friends.map(friend => <Friend id={friend.id} name={friend.name} img = {friend.img}  key={friend.id} />);
    
     return (
         <div className = {s.friendsBlock}>
-           <h1>Friends</h1>
-            <div className = {s.friends}>
-                { friends }
-            </div>
+            <h1>Friends</h1>
+            
+            <NavLink to="/friends" className = {s.friends}>
+                {/* { friends } */}
+            </NavLink>
         </div>
     );
 }
