@@ -16,3 +16,17 @@
     margin-bottom: 10px;
     font-size: 20px;
 }
+
+.friend img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    object-fit: cover;
+}
+
+.friend {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    justify-items: center;
+    align-items: center;
+}
