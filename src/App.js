@@ -14,7 +14,6 @@ import UsersContainer from './components/Users/UsersContainer';
 
 
 const App = (props) => {
-	console.log(props)
 	return (
 		<div className="app-wrapper">
 			<Header />

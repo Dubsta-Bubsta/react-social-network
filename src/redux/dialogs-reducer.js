@@ -32,7 +32,6 @@ const dialogsReducer = (state = initialState, action) => {
                 newMessageText: '',
                 messages: [...state.messages, newMessage],     //Сначала все элементы из старого messages и в конец записывается новое сообщение
             };
-
         }
 
 

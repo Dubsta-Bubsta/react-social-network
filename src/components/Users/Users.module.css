@@ -1,3 +1,24 @@
+.pagination {
+    margin-top: 15px;
+    width: 100%;
+}
+.pagination span {
+    border: 1px solid black;
+    padding: 2px 5px;
+    margin: 0 2px;
+    display: inline-block;
+
+    /* display: none; */
+}
+.pagination .active {
+    display: inline-block;
+}
+.pagination .currentPage{
+    font-weight: bold;
+    color: #4a76a8;
+}
+
+
 .users {
     display: grid;
     margin-top: 20px;
@@ -6,8 +27,8 @@
 .user {
     display: grid;
     grid-template-columns: 1fr 10fr;
-    justify-items: start;
-    align-items: start;
+    justify-items: center;
+    align-items: center;
     margin-bottom: 20px;
     padding: 15px;
     border: 2px solid #edeef0;
@@ -21,8 +42,15 @@
     object-fit: cover;
 }
 
-.user button {
-    width: 100%;
+.imgBlock {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+.imgBlock button {
+    width: 80px;
+    resize: none;
     background: #4a76a8;
     color: #e3e4e8;
     border: none;
@@ -31,18 +59,16 @@
     padding: 7px 10px;
 }
 
-.user button:hover {
+.imgBlock button:hover {
     cursor: pointer;
 }
 
 .userInfo {
-
     margin-left: 15px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 100%;
     height: 100%;
-
 }
 
 .personal {
