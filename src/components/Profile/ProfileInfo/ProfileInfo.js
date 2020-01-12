@@ -1,11 +1,16 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
-
-const ProfileInfo = () => {
+import userAvatarPlug from '../../../assets/images/userAvatarPlug.png';
+import Preloader from '../../common/Preloader/Preloader'
+const ProfileInfo = (props) => {
+    if (!props.profile) {
+        return <Preloader />
+    }
     return (
+       
         <div className={s.profileInfo}>
             <div>
-                <img src="https://oboi.ws/filters/earlybird_24_8740_oboi_gregori_haus_1400x1050.jpg" alt="img" />
+                <img src={props.profile ? props.profile.photos.large : userAvatarPlug} alt="img" />
             </div>
             <div>
                 ava + description

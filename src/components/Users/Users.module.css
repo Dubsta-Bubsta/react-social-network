@@ -1,3 +1,7 @@
+.invisible {
+    display: none;
+}
+
 .pagination {
     margin-top: 15px;
     width: 100%;
@@ -7,8 +11,6 @@
     padding: 2px 5px;
     margin: 0 2px;
     display: inline-block;
-
-    /* display: none; */
 }
 .pagination .active {
     display: inline-block;
@@ -20,6 +22,7 @@
 
 
 .users {
+    display: block;
     display: grid;
     margin-top: 20px;
 }
@@ -35,17 +38,23 @@
     border-radius: 20px;
 }
 
-.user img {
-    width: 70px;
-    height: 70px;
-    border-radius: 70px;
-    object-fit: cover;
-}
+
 
 .imgBlock {
     display: grid;
     justify-items: center;
     align-items: center;
+}
+
+.imgBlock img {
+    width: 70px;
+    height: 70px;
+    border-radius: 70px;
+    object-fit: cover;
+}
+.imgBlock img:hover {
+   cursor: pointer!important;
+
 }
 
 .imgBlock button {
