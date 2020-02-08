@@ -1,9 +1,13 @@
+import { usersAPI } from '../api/api';
+
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const TOGGLE_IS_FOLLOWING = 'TOGGLE_IS_FOLLOWING';
 
 let initialState = {
     users: [
@@ -17,6 +21,7 @@ let initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
+    followingInProgress: []
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -26,7 +31,7 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 users: state.users.map(user => {
                     if (user.id === action.userId) {
-                        return { ...user, isFriend: true };
+                        return { ...user, followed: true };
                     }
                     return user;
                 }),
@@ -37,7 +42,7 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 users: state.users.map(user => {
                     if (user.id === action.userId) {
-                        return { ...user, isFriend: false };
+                        return { ...user, followed: false };
                     }
                     return user;
                 }),
@@ -67,19 +72,27 @@ const usersReducer = (state = initialState, action) => {
                 isFetching: action.isFetching,
             }
         }
+        case TOGGLE_IS_FOLLOWING: {
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id != action.userId)
+            }
+        }
         default:
             return state;
     }
 }
 
 //Action Creators
-export const follow = (userId) => {
+export const followSuccess = (userId) => {
     return {
         type: FOLLOW,
         userId
     }
 }
-export const unfollow = (userId) => {
+export const unfollowSuccess = (userId) => {
     return {
         type: UNFOLLOW,
         userId
@@ -112,4 +125,50 @@ export const toggleIsFetching = (isFetching) => {
     }
 }
 
+export const toggleIsFollowing = (isFetching, userId) => {
+    return {
+        type: TOGGLE_IS_FOLLOWING,
+        isFetching,
+        userId
+    }
+}
+
+
+
+
+export const getUsers = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+
+        usersAPI.getUsers(currentPage, pageSize).then((data) => {
+            dispatch(toggleIsFetching(false));
+            dispatch(setUsers(data.items));
+            dispatch(setTotalUsersCount(data.totalCount));
+        });
+    }
+}
+
+export const follow = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleIsFollowing(true, userId));
+        usersAPI.follow(userId).then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(followSuccess(userId));
+            }
+            dispatch(toggleIsFollowing(false, userId));
+        });
+    }
+}
+
+export const unfollow = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleIsFollowing(true, userId));
+        usersAPI.unfollow(userId).then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(unfollowSuccess(userId));
+            }
+            dispatch(toggleIsFollowing(false, userId));
+        });
+    }
+}
 export default usersReducer;

@@ -71,7 +71,9 @@
 .imgBlock button:hover {
     cursor: pointer;
 }
-
+.imgBlock button:disabled, .imgBlock button[disabled] {
+    background: #76879b;
+}
 .userInfo {
     margin-left: 15px;
     display: grid;

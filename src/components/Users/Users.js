@@ -14,7 +14,6 @@ const Users = (props) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
-
     return (
         <div className={s.usersBlock}>
             <h1>Users</h1>
@@ -42,9 +41,14 @@ const Users = (props) => {
                             <div className={s.imgBlock}>
                                 <NavLink to={`/profile/${user.id}`}><img src={user.photo != null ? user.photo : userAvatarPlug} alt="avatarImg" /></NavLink>
                                 {
-                                    user.isFriend ?
-                                        <button onClick={() => { props.unfollow(user.id) }}>Unfollow</button> :
-                                        <button onClick={() => { props.follow(user.id) }}>Follow</button>
+                                    user.followed ?
+                                        <button disabled={props.followingInProgress.some(id => id === user.id)} onClick={() => {
+                                            props.unfollow(user.id);
+                                        }}>Unfollow</button> :
+                                        <button disabled={props.followingInProgress.some(id => id === user.id)}
+                                            onClick={() => {
+                                                props.follow(user.id);
+                                            }}>Follow</button>
                                 }
                             </div>
                             <div className={s.userInfo}>
