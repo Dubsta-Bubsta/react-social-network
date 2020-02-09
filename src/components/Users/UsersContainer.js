@@ -2,6 +2,8 @@ import React from 'react';
 import Users from './Users';
 import { connect } from 'react-redux';
 import { follow, unfollow, setCurrentPage, getUsers } from '../../redux/users-reducer';
+import { compose } from 'redux';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 
 class UsersContainer extends React.Component {
@@ -42,8 +44,10 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {
-    follow, unfollow,    
-    setCurrentPage, 
-    getUsers
-})(UsersContainer);        //Компонента Users получает все пропсы через connect
+
+
+
+export default compose(    
+    withAuthRedirect,
+    connect(mapStateToProps, { follow, unfollow, setCurrentPage, getUsers}),
+)(UsersContainer);

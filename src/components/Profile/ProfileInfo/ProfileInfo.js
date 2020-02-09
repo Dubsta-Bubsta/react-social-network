@@ -1,7 +1,9 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
 import userAvatarPlug from '../../../assets/images/userAvatarPlug.png';
-import Preloader from '../../common/Preloader/Preloader'
+import Preloader from '../../common/Preloader/Preloader';
+import ProfileStatus from './ProfileStatus'
+
 const ProfileInfo = (props) => {
     if (!props.profile) {
         return <Preloader />
@@ -13,7 +15,7 @@ const ProfileInfo = (props) => {
                 <img src={props.profile ? props.profile.photos.large : userAvatarPlug} alt="img" />
             </div>
             <div>
-                ava + description
+               <ProfileStatus status={"hi"}/>
             </div>
         </div>
     );
