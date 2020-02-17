@@ -1,5 +1,4 @@
 const SEND_MESSAGE = 'SEND-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
 
 let initialState = {
@@ -15,8 +14,7 @@ let initialState = {
         { id: 2, name: 'Andrew' },
         { id: 3, name: 'Misha' },
         { id: 4, name: 'Mark' },
-    ],
-    newMessageText: 'New message Text',
+    ]
 }
 
 const dialogsReducer = (state = initialState, action) => {
@@ -24,7 +22,7 @@ const dialogsReducer = (state = initialState, action) => {
         case SEND_MESSAGE: {
             let newMessage = {
                 id: state.messages.length + 1,
-                message: state.newMessageText,
+                message: action.newMessageBody,
             };
 
             return {
@@ -33,14 +31,7 @@ const dialogsReducer = (state = initialState, action) => {
                 messages: [...state.messages, newMessage],     //Сначала все элементы из старого messages и в конец записывается новое сообщение
             };
         }
-
-
-        case UPDATE_NEW_MESSAGE_TEXT: {
-            return {
-                ...state,
-                newMessageText: action.newText,
-            };
-        }
+       
 
         default:
             return state;
@@ -48,14 +39,11 @@ const dialogsReducer = (state = initialState, action) => {
 }
 
 
-export const sendMessageActionCreator = () => {
+export const sendMessageActionCreator = (newMessageBody) => {
+    debugger
     return {
-        type: SEND_MESSAGE
-    }
-}
-export const updateNewMessageTextActionCreator = (text) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT, newText: text
+        type: SEND_MESSAGE,
+        newMessageBody
     }
 }
 
