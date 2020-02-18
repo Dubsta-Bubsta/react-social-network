@@ -1,5 +1,4 @@
 export const required = (value) => {
-    debugger
     if (value) return undefined;
 
     return "Field is required";
