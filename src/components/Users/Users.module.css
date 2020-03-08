@@ -15,11 +15,6 @@
 .pagination .active {
     display: inline-block;
 }
-.pagination .currentPage{
-    font-weight: bold;
-    color: #4a76a8;
-}
-
 
 .users {
     display: block;

@@ -1,4 +1,5 @@
 import { usersAPI } from '../api/api';
+import { updateObjectInArray } from '../utils/object-helpers';
 
 
 const FOLLOW = 'FOLLOW';
@@ -10,13 +11,7 @@ const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const TOGGLE_IS_FOLLOWING = 'TOGGLE_IS_FOLLOWING';
 
 let initialState = {
-    users: [
-        //    { id: 1, photo: 'https://st2.depositphotos.com/1002315/8453/i/950/depositphotos_84538216-stock-photo-man-fashion.jpg', isFriend: true, name: 'Alex', serName: 'Ivanov', status: 'My own status', location: { country: 'Russia', city: 'Saint-Petersburg' } },
-        //     { id: 2, photo: 'https://st2.depositphotos.com/1002315/8453/i/950/depositphotos_84538216-stock-photo-man-fashion.jpg', isFriend: false, name: 'Dmitry', serName: 'Ivanov', status: 'My own status', location: { country: 'Ukraine', city: 'Minsk' } },
-        //     { id: 3, photo: 'https://st2.depositphotos.com/1002315/8453/i/950/depositphotos_84538216-stock-photo-man-fashion.jpg', isFriend: true, name: 'Ivan', serName: 'Ivanov', status: 'My own status', location: { country: 'Ukraine', city: 'Donbass' } },
-        //     { id: 4, photo: 'https://st2.depositphotos.com/1002315/8453/i/950/depositphotos_84538216-stock-photo-man-fashion.jpg', isFriend: false, name: 'Oleg', serName: 'Ivanov', status: 'My own status', location: { country: 'Russia', city: 'Tomsk' } },
-        //     { id: 5, photo: 'https://st2.depositphotos.com/1002315/8453/i/950/depositphotos_84538216-stock-photo-man-fashion.jpg', isFriend: true, name: 'Evgeniy', serName: 'Ivanov', status: 'My own status', location: { country: 'Russia', city: 'Sochi' } },
-    ],
+    users: [],
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
@@ -28,24 +23,14 @@ const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW: {
             return {
-                ...state,
-                users: state.users.map(user => {
-                    if (user.id === action.userId) {
-                        return { ...user, followed: true };
-                    }
-                    return user;
-                }),
+                ...state,               
+                users: updateObjectInArray(state.users, action.userId, "id", { followed: true})
             }
         }
         case UNFOLLOW: {
             return {
                 ...state,
-                users: state.users.map(user => {
-                    if (user.id === action.userId) {
-                        return { ...user, followed: false };
-                    }
-                    return user;
-                }),
+                users: updateObjectInArray(state.users, action.userId, "id", { followed: false})
             }
         }
         case SET_USERS: {
@@ -83,6 +68,14 @@ const usersReducer = (state = initialState, action) => {
         default:
             return state;
     }
+}
+const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
+    dispatch(toggleIsFollowing(true, userId));
+    let data = await apiMethod(userId);
+    if (data.resultCode === 0) {
+        dispatch(actionCreator(userId));
+    }
+    dispatch(toggleIsFollowing(false, userId));
 }
 
 //Action Creators
@@ -136,39 +129,25 @@ export const toggleIsFollowing = (isFetching, userId) => {
 
 
 
-export const getUsers = (currentPage, pageSize) => {
-    return (dispatch) => {
-        dispatch(toggleIsFetching(true));
+export const getUsersFromServer = (currentPage, pageSize) => async (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    dispatch(setCurrentPage(currentPage));
 
-        usersAPI.getUsers(currentPage, pageSize).then((data) => {
-            dispatch(toggleIsFetching(false));
-            dispatch(setUsers(data.items));
-            dispatch(setTotalUsersCount(data.totalCount));
-        });
-    }
+    let data = await usersAPI.getUsers(currentPage, pageSize);
+    dispatch(toggleIsFetching(false));
+    dispatch(setUsers(data.items));
+    dispatch(setTotalUsersCount(data.totalCount));
 }
 
-export const follow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleIsFollowing(true, userId));
-        usersAPI.follow(userId).then((data) => {
-            if (data.resultCode === 0) {
-                dispatch(followSuccess(userId));
-            }
-            dispatch(toggleIsFollowing(false, userId));
-        });
-    }
+export const follow = (userId) => async (dispatch) => {
+    let apiMethod = usersAPI.follow.bind(usersAPI);
+
+    followUnfollowFlow(dispatch, userId, apiMethod, followSuccess);
 }
 
-export const unfollow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleIsFollowing(true, userId));
-        usersAPI.unfollow(userId).then((data) => {
-            if (data.resultCode === 0) {
-                dispatch(unfollowSuccess(userId));
-            }
-            dispatch(toggleIsFollowing(false, userId));
-        });
-    }
+export const unfollow = (userId) => async (dispatch) => {
+    let apiMethod = usersAPI.unfollow.bind(usersAPI);
+
+    followUnfollowFlow(dispatch, userId, apiMethod, unfollowSuccess);
 }
 export default usersReducer;
