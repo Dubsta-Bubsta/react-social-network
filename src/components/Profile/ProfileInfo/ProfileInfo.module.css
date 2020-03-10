@@ -1,6 +1,6 @@
 .profileInfo {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   padding-bottom: 20px;
   grid-gap: 20px;
 }
@@ -8,3 +8,15 @@
 img {
   width: 100%;
 }
+
+.contactList {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+.info div {
+ line-height: 24px;
+}
+
+.info div b{
+  font-weight: bold;
+ }

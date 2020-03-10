@@ -1,16 +1,6 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Route, withRouter } from "react-router-dom";
 import './App.css';
-
-import HeaderContainer from './components/Header/HeaderContainer';
-import Nav from './components/Nav/Nav'
-import ProfileContainer from './components/Profile/ProfileContainer';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
-import News from './components/News/News';
-import Music from './components/Music/Music';
-import Settings from './components/Settings/Settings';
-import UsersContainer from './components/Users/UsersContainer';
-import Login from './components/Login/Login';
 
 import { connect } from 'react-redux';
 import { initializeApp } from './redux/app-reducer';
@@ -19,6 +9,19 @@ import Preloader from './components/common/Preloader/Preloader';
 import store from './redux/redux-store'
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+
+import HeaderContainer from './components/Header/HeaderContainer';
+import Nav from './components/Nav/Nav'
+
+import News from './components/News/News';
+import Music from './components/Music/Music';
+import Settings from './components/Settings/Settings';
+import UsersContainer from './components/Users/UsersContainer';
+import Login from './components/Login/Login';
+import { withSuspense } from './hoc/withSuspense';
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
 
 class App extends React.Component {
 	componentDidMount() {
@@ -33,8 +36,8 @@ class App extends React.Component {
 				<div className='app-container'>
 					<Nav />
 					<div className="app-wrapper-content">
-						<Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-						<Route path="/dialogs" render={() => <DialogsContainer />} />
+						<Route path="/profile/:userId?" render={withSuspense(ProfileContainer)} />
+						<Route path="/dialogs" render={withSuspense(DialogsContainer)}/>
 						<Route path="/users" render={() => <UsersContainer />} />
 
 						<Route path="/news" component={News} />
