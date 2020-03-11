@@ -20,3 +20,8 @@ img {
 .info div b{
   font-weight: bold;
  }
+
+ .formSummaryError {
+  padding: 5px;
+  color: red;
+}
