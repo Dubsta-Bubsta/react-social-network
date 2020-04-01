@@ -28,7 +28,11 @@ const ProfileInfo = (props) => {
             <div> <img src={props.profile.photos.large ? props.profile.photos.large : userAvatarPlug} alt="img" /> </div>
             {editMode ?
                 <ProfileDataForm onSubmit={onSubmit} initialValues={props.profile} profile={props.profile}/> :
-                <ProfileData profile={props.profile} isOwner={props.isOwner} activateEditMode={() => { setEditMode(true) }} />}
+                <ProfileData
+                    profile={props.profile}
+                    isOwner={props.isOwner}
+                    activateEditMode={() => { setEditMode(true) }}
+                    updateStatus={props.updateStatus}/>}
             {props.isOwner ? <input type={"file"} onChange={onMainPhotoSelected} /> : null}
 
         </div>

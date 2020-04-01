@@ -13,6 +13,7 @@ const ProfileStatus = (props) => {
     }
 
     const deactivateEditMode = () => {
+        debugger
         setEditMode(false);
         props.updateStatus(status);
     }
@@ -25,7 +26,7 @@ const ProfileStatus = (props) => {
         <div>
             { !editMode &&
             <div>
-                <b>Status: </b> <span onDoubleClick={ activateEditMode }>{props.status || "-------"}</span>
+                <b>Status: </b> <span onDoubleClick={ activateEditMode }>{status ? status :"Your status"}</span>
             </div>
             }
             {editMode &&

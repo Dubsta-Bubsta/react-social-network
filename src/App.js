@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Route, withRouter } from "react-router-dom";
+import { Route, withRouter, Switch, Redirect } from "react-router-dom";
 import './App.css';
 
 import { connect } from 'react-redux';
@@ -23,9 +23,19 @@ import { withSuspense } from './hoc/withSuspense';
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
 
+
 class App extends React.Component {
+	catchAllUnhandledErrors = (reason, promiseRejectionEvent) => {
+		console.error('Reason: ' + reason+ '\n' + promiseRejectionEvent);
+	}
+
 	componentDidMount() {
 		this.props.initializeApp();
+		window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);		
 	}
 	render() {
 		if (!this.props.initialized)
@@ -36,16 +46,20 @@ class App extends React.Component {
 				<div className='app-container'>
 					<Nav />
 					<div className="app-wrapper-content">
-						<Route path="/profile/:userId?" render={withSuspense(ProfileContainer)} />
-						<Route path="/dialogs" render={withSuspense(DialogsContainer)}/>
-						<Route path="/users" render={() => <UsersContainer />} />
+						<Switch>
+							<Redirect exact from="/" to="/profile" /> 
+							<Route path="/profile/:userId?" render={withSuspense(ProfileContainer)} />
+							<Route path="/dialogs" render={withSuspense(DialogsContainer)} />
+							<Route path="/users" render={() => <UsersContainer />} />
 
-						<Route path="/news" component={News} />
-						<Route path="/music" component={Music} />
+							<Route path="/news" component={News} />
+							<Route path="/music" component={Music} />
 
-						<Route path="/settings" component={Settings} />
+							<Route path="/settings" component={Settings} />
 
-						<Route path="/login" component={Login} />
+							<Route path="/login" component={Login} />
+							<Route path="" render={() => <div>404 Page is not found</div>} />
+						</Switch>
 					</div>
 				</div>
 			</div>
