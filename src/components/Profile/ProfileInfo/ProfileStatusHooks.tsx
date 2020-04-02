@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-const ProfileStatus = (props) => {
-    let [editMode, setEditMode] = useState(false);
-    let [status, setStatus] = useState(props.status);
+type PropsType = {
+	status: string
+	updateStatus: (newStatus: string) => void
+}
+
+const ProfileStatus = (props: PropsType) => {
+    let [editMode, setEditMode] = useState<boolean>(false);
+    let [status, setStatus] = useState<string>(props.status);
 
     useEffect(() => {
         setStatus(props.status);
@@ -13,12 +18,11 @@ const ProfileStatus = (props) => {
     }
 
     const deactivateEditMode = () => {
-        debugger
         setEditMode(false);
         props.updateStatus(status);
     }
 
-    const onStatusChange = (e) => {
+    const onStatusChange = (e: React.FormEvent<HTMLInputElement>) => {
         setStatus(e.currentTarget.value);
     }
 

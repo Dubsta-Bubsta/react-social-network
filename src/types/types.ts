@@ -24,6 +24,7 @@ export type ContactsType = {
 	website: string
 	youtube: string
 	mainLink: string
+	[key:string] : string
 }
 
 export type UserType = {

@@ -14,7 +14,7 @@ import { reducer as formReducer } from "redux-form";
 import thunkMiddleware from "redux-thunk"
 
 
-let reducers = combineReducers({
+let rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     friendsBlock: friendsReducer,
@@ -24,11 +24,14 @@ let reducers = combineReducers({
     form: formReducer,
 });
 
+type RootReducerType = typeof rootReducer
+export type AppStateType = ReturnType<RootReducerType>
 
-const store = createStore(reducers, composeWithDevTools(
+let state: AppStateType
+const store = createStore(rootReducer, composeWithDevTools(
     applyMiddleware(thunkMiddleware),
 ));
 
 export default store;
-
+// @ts-ignore
 window.store = store;

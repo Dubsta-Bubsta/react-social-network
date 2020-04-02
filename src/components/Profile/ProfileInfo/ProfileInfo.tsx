@@ -1,24 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import s from './ProfileInfo.module.css';
 import userAvatarPlug from '../../../assets/images/userAvatarPlug.png';
 import Preloader from '../../common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatusHooks'
 import ProfileDataForm from './ProfileDataForm'
+import { ProfileType } from '../../../types/types';
 
-const ProfileInfo = (props) => {
+type ProfilePropsType = {
+	profile: ProfileType | null
+	isOwner: boolean
+	status: string
+	savePhoto: (file: any) => void	
+	updateStatus: (status: string) => void
+	saveProfile: (formData: FormDataType) => any
+}
+export type FormDataType = {
+
+}
+
+const ProfileInfo = (props: ProfilePropsType) => {
     let [editMode, setEditMode] = useState(false);
 
 
     if (!props.profile) {
         return <Preloader />
     }
-    const onMainPhotoSelected = (e) => {
+	const onMainPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files === null) {
+			return 0;
+		}
         if (e.target.files.length) {
             props.savePhoto(e.target.files[0]);
         }
     }
 
-    const onSubmit = async (formData) => {
+    const onSubmit = async (formData: FormDataType) => {
         props.saveProfile(formData).then(() => {
             setEditMode(false);
         });
@@ -27,10 +43,13 @@ const ProfileInfo = (props) => {
         <div className={s.profileInfo}>
             <div> <img src={props.profile.photos.large ? props.profile.photos.large : userAvatarPlug} alt="img" /> </div>
             {editMode ?
-                <ProfileDataForm onSubmit={onSubmit} initialValues={props.profile} profile={props.profile}/> :
-                <ProfileData
+				<ProfileDataForm onSubmit={onSubmit} initialValues={props.profile}
+					profile={props.profile}
+				/> :
+				<ProfileData
                     profile={props.profile}
-                    isOwner={props.isOwner}
+					isOwner={props.isOwner}
+					status={props.status}
                     activateEditMode={() => { setEditMode(true) }}
                     updateStatus={props.updateStatus}/>}
             {props.isOwner ? <input type={"file"} onChange={onMainPhotoSelected} /> : null}
@@ -38,13 +57,24 @@ const ProfileInfo = (props) => {
         </div>
     );
 }
+type ContactPropsType = {
+	contactTitle: any
+	contactValue: any
+}
 
-const Contact = ({ contactTitle, contactValue }) => {
+const Contact:FC<ContactPropsType> = ({ contactTitle, contactValue }) => {
     return contactValue && <div className={s.contact} > {contactTitle}: {contactValue}</div >
 
 }
 
-const ProfileData = (props) => {
+type ProfileDataType = {
+	activateEditMode: () => void
+	isOwner: boolean
+	profile: ProfileType
+	status: string
+	updateStatus: (status: string) => void
+} 
+const ProfileData:FC<ProfileDataType> = (props) => {
     return <div className={s.info}>
         {props.isOwner && <div><button onClick={props.activateEditMode}>Edit</button></div>}
         <div><b>Full name:</b> {props.profile.fullName}</div>
@@ -52,7 +82,6 @@ const ProfileData = (props) => {
         {props.profile.lookingForAJob &&
             <div>Proffestional skills: {props.profile.lookingForAJobDescription}</div>}
 
-        <div><b>About me:</b> {props.profile.aboutMe}</div>
         <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
         <div className={s.contactList}>
             <b>Contacts:</b>
