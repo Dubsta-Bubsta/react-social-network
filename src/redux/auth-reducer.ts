@@ -1,5 +1,9 @@
-import { profileAPI, authAPI, securityAPI } from '../api/api';
+import { profileAPI, authAPI, securityAPI, ResultCodesEnum, ResultCodeForCaptchaEnum } from '../api/api';
 import { stopSubmit } from 'redux-form';
+
+import { Dispatch } from 'react';
+import { ThunkAction } from 'redux-thunk';
+import { AppStateType } from './redux-store';
 
 const SET_USER_DATA = 'SEND-USER-DATA';
 const GET_CAPTCHA_URL = 'GET_CAPTCHA_URL';
@@ -64,20 +68,28 @@ export const getCapthaUrlSuccess = (captchaUrl: string): GetCapthaUrlSuccessActi
 }
 
 
-export const getAuthUserData = () => async (dispatch: any) => {
-    let response = await authAPI.auth();
-    if (response.resultCode === 0) {
+type ActionsTypes =
+	GetCapthaUrlSuccessActionType | SetAuthUserDataActionType;
+
+type GetStateType = () => AppStateType
+type DispatchType = Dispatch<ActionsTypes>
+type ThunksType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+
+
+export const getAuthUserData = ():ThunksType => async (dispatch) => {	
+	let response = await authAPI.auth();
+    if (response.resultCode === ResultCodesEnum.Success) {
         let { id, email, login } = response.data;
         dispatch(setAuthUserData(id, email, login, true));
     }
 }
 
-export const login = (email: string, password: string, rememberMe: boolean, captcha = "") => async (dispatch: any) => {
-    let response = await authAPI.login(email, password, rememberMe, captcha)
-    if (response.resultCode === 0) {
+export const login = (email: string, password: string, rememberMe: boolean, captcha = "") => async (dispatch:any) => {
+	let response = await authAPI.login(email, password, rememberMe, captcha)
+    if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(getAuthUserData());
     } else {
-        if (response.resultCode === 10) {
+        if (response.resultCode === ResultCodeForCaptchaEnum.CaptchaIsRequired) {
             dispatch(getCaptchaUrl());
         }
         let message = response.messages.length > 0 ? response.messages[0] : "Any error"
@@ -85,18 +97,16 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
     }
 }
 
-
-
-export const getCaptchaUrl = () => async (dispatch: any) => {
+export const getCaptchaUrl = (): ThunksType => async (dispatch) => {
     let response = await securityAPI.getCaptcha()
     const captchaUrl = response.url;
 
     dispatch(getCapthaUrlSuccess(captchaUrl))
 }
 
-export const logout = () => async (dispatch: any) => {
+export const logout = (): ThunksType => async (dispatch) => {
     let response = await authAPI.logout()
-    if (response.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(setAuthUserData(null, null, null, false));
     }
 }

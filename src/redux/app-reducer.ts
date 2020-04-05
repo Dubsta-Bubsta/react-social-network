@@ -1,4 +1,8 @@
 import { getAuthUserData } from "./auth-reducer"
+import { Dispatch } from 'react';
+import { ThunkAction } from 'redux-thunk';
+import { AppStateType } from './redux-store';
+
 const SET_INITIALIZED = "SET_INITIALIZED";
 
 export type InitialStateType = {
@@ -27,7 +31,12 @@ const appReducer = (state = initialState, action:any): InitialStateType => {
             return state;
     }
 }
+type ActionsTypes =
+	InitializedSuccesActionType;
 
+	type GetStateType = () => AppStateType
+	type DispatchType = Dispatch<ActionsTypes>
+	type ThunksType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 
 type InitializedSuccesActionType = {
 	type: typeof SET_INITIALIZED
